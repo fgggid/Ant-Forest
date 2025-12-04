@@ -541,12 +541,20 @@ function Ant_forest () {
     randomScrollUp()
   }
 
+  function findAndClickMyFriendList() {
+    let showFriendList = _widgetUtils.widgetGetOne('.*(今日|本周|总)能量榜.*', 1000)
+    if (showFriendList) {
+        showFriendList.click()
+    }
+  }
+
   function enterFriendList () {
     // 测试点，部分用户反馈无法获取到控件了，尝试OCR识别
     let test = false
     let limit = 5
     do {
       randomScrollDown()
+      findAndClickMyFriendList()
     } while (--limit > 0 && (test || !_widgetUtils.widgetChecking(_config.enter_friend_list_ui_content || '.*查看更多好友.*', { algorithm: 'PDFS', timeoutSetting: 1000 })))
     sleep(500)
     let moreFriends = _widgetUtils.widgetGetOne(_config.enter_friend_list_ui_content || '.*查看更多好友.*')
